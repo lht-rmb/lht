@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>梁的个人网站</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind主题 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#10b981',
+                        accent: '#f97316',
+                        dark: '#1e293b',
+                        light: '#f8fafc'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-custom {
+                transition: all 0.3s ease;
+            }
+        }
+    </style>
+    
+    <style>
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 导航栏滚动效果 */
+        .nav-scrolled {
+            @apply bg-dark/95 shadow-lg py-2;
+        }
+        
+        /* 渐入动画 */
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 为不同部分设置不同的延迟 */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-dark/80 text-white py-4">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex justify-between items-center">
+                <div id="branding" class="flex items-center space-x-2">
+                    <i class="fa fa-user-circle-o text-2xl text-accent"></i>
+                    <h1 class="text-xl md:text-2xl font-bold">梁的个人网站</h1>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="hover:text-accent transition-custom font-medium">首页</a>
+                    <a href="#info" class="hover:text-accent transition-custom font-medium">个人信息</a>
+                    <a href="#experience" class="hover:text-accent transition-custom font-medium">在校经历</a>
+                    <a href="#evaluation" class="hover:text-accent transition-custom font-medium">自我评价</a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- 移动端导航菜单 -->
+            <div id="mobile-menu" class="md:hidden hidden mt-4 pb-2">
+                <div class="flex flex-col space-y-3">
+                    <a href="#home" class="hover:text-accent transition-custom py-1">首页</a>
+                    <a href="#info" class="hover:text-accent transition-custom py-1">个人信息</a>
+                    <a href="#experience" class="hover:text-accent transition-custom py-1">在校经历</a>
+                    <a href="#evaluation" class="hover:text-accent transition-custom py-1">自我评价</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 首页横幅 -->
+    <section id="home" class="pt-32 pb-20 md:pt-40 md:pb-32 bg-gradient-to-br from-dark to-gray-800 text-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+                    <h2 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-shadow mb-4">
+                        欢迎来到我的个人网站
+                    </h2>
+                    <p class="text-gray-300 text-lg md:text-xl mb-8 max-w-lg">
+                        我是梁，一名计算机专业的本科毕业生，专注于网站设计与Web应用开发技术。
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#info" class="bg-accent hover:bg-accent/90 text-white px-6 py-3 rounded-lg font-medium transition-custom flex items-center">
+                            <i class="fa fa-user mr-2"></i> 了解更多
+                        </a>
+                        <a href="#contact" class="bg-transparent border-2 border-white hover:border-accent hover:text-accent px-6 py-3 rounded-lg font-medium transition-custom flex items-center">
+                            <i class="fa fa-envelope mr-2"></i> 联系方式
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center fade-in delay-200">
+                    <div class="relative">
+                        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-accent shadow-lg">
+                            <img src="https://picsum.photos/id/1005/400/400" alt="个人照片" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-3 -right-3 bg-primary text-white rounded-full p-4 shadow-lg">
+                            <i class="fa fa-code text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 个人信息 -->
+    <section id="info" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">个人信息</h2>
+                <div class="w-24 h-1 bg-accent mx-auto"></div>
+            </div>
+            
+            <div class="max-w-3xl mx-auto bg-gray-50 rounded-xl shadow-md p-8 md:p-10 fade-in delay-100">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex items-start">
+                        <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                            <i class="fa fa-user text-primary text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-1">姓名</h3>
+                            <p class="text-gray-600">梁</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                            <i class="fa fa-flag text-primary text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-1">民族</h3>
+                            <p class="text-gray-600">汉族</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                            <i class="fa fa-graduation-cap text-primary text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-1">学历</h3>
+                            <p class="text-gray-600">本科</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                            <i class="fa fa-map-marker text-primary text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-1">籍贯</h3>
+                            <p class="text-gray-600">山东</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 pt-8 border-t border-gray-200">
+                    <div class="flex items-start">
+                        <div class="bg-primary/10 p-3 rounded-lg mr-4 mt-1">
+                            <i class="fa fa-book text-primary text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-3">教育背景</h3>
+                            <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                                <p class="text-gray-700 mb-2"><span class="font-medium">时间：</span>2020.09 - 2024.06</p>
+                                <p class="text-gray-700 mb-2"><span class="font-medium">学校：</span>山东师范大学</p>
+                                <p class="text-gray-700 mb-2"><span class="font-medium">专业：</span>计算机专业</p>
+                                <p class="text-gray-700"><span class="font-medium">优势学科：</span>网站设计与Web应用开发技术</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 在校经历 -->
+    <section id="experience" class="py-16 md:py-24 bg-gray-50">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">在校经历</h2>
+                <div class="w-24 h-1 bg-accent mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- 竞赛经历 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-custom fade-in delay-100">
+                    <div class="bg-primary text-white p-6">
+                        <h3 class="text-xl font-bold flex items-center">
+                            <i class="fa fa-trophy mr-3"></i>竞赛经历
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-4">
+                            <li class="flex">
+                                <div class="bg-primary/10 p-2 rounded-full mr-4 mt-1">
+                                    <i class="fa fa-flag-checkered text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">蓝桥杯</h4>
+                                    <p class="text-gray-600 text-sm">参与程序设计竞赛，锻炼了算法思维和编程能力</p>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <div class="bg-primary/10 p-2 rounded-full mr-4 mt-1">
+                                    <i class="fa fa-calculator text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">全国大学生数学竞赛</h4>
+                                    <p class="text-gray-600 text-sm">提升了数学建模和问题分析能力</p>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <div class="bg-primary/10 p-2 rounded-full mr-4 mt-1">
+                                    <i class="fa fa-lightbulb-o text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">创新创业比赛</h4>
+                                    <p class="text-gray-600 text-sm">参与团队项目开发，培养了创新思维和团队协作能力</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 职务经历 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-custom fade-in delay-200">
+                    <div class="bg-secondary text-white p-6">
+                        <h3 class="text-xl font-bold flex items-center">
+                            <i class="fa fa-sitemap mr-3"></i>职务经历
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-6">
+                            <li class="flex">
+                                <div class="bg-secondary/10 p-2 rounded-full mr-4 mt-1">
+                                    <i class="fa fa-bullhorn text-secondary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">学生会宣传部干事</h4>
+                                    <p class="text-gray-600">负责学生会活动的宣传工作，包括海报设计、活动报道等，提高了组织协调能力和创意设计能力。</p>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <div class="bg-secondary/10 p-2 rounded-full mr-4 mt-1">
+                                    <i class="fa fa-users text-secondary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">班级宣传委员</h4>
+                                    <p class="text-gray-600">负责班级各项活动的宣传和记录工作，加强了班级同学之间的沟通与交流，锻炼了沟通能力和责任感。</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 自我评价 -->
+    <section id="evaluation" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">自我评价</h2>
+                <div class="w-24 h-1 bg-accent mx-auto"></div>
+            </div>
+            
+            <div class="max-w-3xl mx-auto bg-gray-50 rounded-xl shadow-md p-8 md:p-10 fade-in delay-100">
+                <div class="flex justify-center mb-8">
+                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                        <i class="fa fa-comment text-primary text-2xl"></i>
+                    </div>
+                </div>
+                
+                <p class="text-gray-700 text-lg leading-relaxed mb-6">
+                    本人在校期间系统学习并掌握了专业相关的理论和实践知识，尤其在网站设计与Web应用开发技术方面有较深入的研究和实践。
+                </p>
+                
+                <p class="text-gray-700 text-lg leading-relaxed mb-6">
+                    积极参与各类竞赛和学生工作，培养了较强的团队协作能力、沟通能力和问题解决能力。具有良好的学习能力和适应能力，能够快速掌握新知识和技能。
+                </p>
+                
+                <p class="text-gray-700 text-lg leading-relaxed">
+                    始终以企业对人才的需求方向发展自己，注重理论与实践相结合，希望能在工作中充分发挥自己的专业技能，为团队贡献力量。
+                </p>
+                
+                <!-- 技能标签 -->
+                <div class="mt-10">
+                    <h3 class="font-semibold text-lg mb-4">专业技能</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm">HTML5</span>
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm">CSS3</span>
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm">JavaScript</span>
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm">Web开发</span>
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm">响应式设计</span>
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm">算法基础</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section id="contact" class="py-16 md:py-24 bg-dark text-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4">联系方式</h2>
+                <div class="w-24 h-1 bg-accent mx-auto"></div>
+            </div>
+            
+            <div class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 fade-in delay-100">
+                <div class="bg-gray-800/50 p-6 rounded-lg text-center hover:bg-gray-800 transition-custom">
+                    <div class="w-14 h-14 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa fa-envelope text-accent text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">邮箱</h3>
+                    <p class="text-gray-300">example@mail.com</p>
+                </div>
+                
+                <div class="bg-gray-800/50 p-6 rounded-lg text-center hover:bg-gray-800 transition-custom">
+                    <div class="w-14 h-14 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa fa-phone text-accent text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">电话</h3>
+                    <p class="text-gray-300">123-4567-8910</p>
+                </div>
+                
+                <div class="bg-gray-800/50 p-6 rounded-lg text-center hover:bg-gray-800 transition-custom">
+                    <div class="w-14 h-14 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa fa-map-marker text-accent text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">地址</h3>
+                    <p class="text-gray-300">山东省济南市</p>
+                </div>
+            </div>
+            
+            <!-- 社交媒体链接 -->
+            <div class="mt-16 text-center fade-in delay-200">
+                <h3 class="font-semibold text-lg mb-6">关注我</h3>
+                <div class="flex justify-center space-x-6">
+                    <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-custom">
+                        <i class="fa fa-github text-white text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-custom">
+                        <i class="fa fa-linkedin text-white text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-custom">
+                        <i class="fa fa-weixin text-white text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-custom">
+                        <i class="fa fa-weibo text-white text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-900 text-white py-6">
+        <div class="container mx-auto px-4 md:px-6 text-center">
+            <p>© 2023 梁的个人网站. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+        });
+        
+        // 移动端菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 平滑滚动到锚点
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动菜单（如果打开）
+                document.getElementById('mobile-menu').classList.add('hidden');
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // 考虑导航栏高度
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 滚动时元素渐入效果
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        fadeElements.forEach(element => {
+            element.style.opacity = 0;
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            fadeInObserver.observe(element);
+        });
+    </script>
+</body>
+</html>
